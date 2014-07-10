@@ -265,6 +265,8 @@ sandboxed_test("testrepo.git") do test_repo, path
         @test index["other.zzz"] != nothing
         @test index["more.zzz"]  != nothing
     end
+    close(test_repo)
+    LibGit2.free!(test_repo)
 end
 
 # test update all
@@ -309,6 +311,8 @@ sandboxed_test("testrepo.git") do test_repo, path
 
         @test index["file.bar"] == nothing
     end
+    close(test_repo)
+    LibGit2.free!(test_repo)
 end
 
 # test remove all
@@ -342,4 +346,6 @@ sandboxed_test("testrepo.git") do test_repo, path
         @test index["file.bar"] != nothing 
         @test index["file.zzz"] == nothing
     end
+    close(test_repo)
+    LibGit2.free!(test_repo)
 end
