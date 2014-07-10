@@ -5,7 +5,7 @@ include("util.jl")
 
 testnames = ["test_cleanup",
              "oid", 
-             "blob",
+             #"blob",
              "config", 
              "signature", 
              "index", 
