@@ -3,7 +3,8 @@ using LibGit2
 
 include("util.jl")
 
-testnames = ["oid", 
+testnames = ["test_cleanup",
+             "oid", 
              "blob",
              "config", 
              "signature", 

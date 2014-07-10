@@ -304,6 +304,7 @@ free!(r::GitRepo) = begin
         try 
             close(r)
         finally
+            @show :free, r
             ccall((:git_repository_free, libgit2), Void, (Ptr{Void},), r.ptr)
             r.ptr = C_NULL
         end
