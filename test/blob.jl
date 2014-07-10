@@ -135,6 +135,7 @@ with_tmp_repo_access("test blob is binary") do test_repo, path
 end
 
 
+#=
 # test blob diff
 sandboxed_test("diff") do test_repo, path
     t1 = GitTree(lookup(test_repo, Oid("d70d245ed97ed2aa596dd1af6536e4bfdb047b69")))
@@ -201,7 +202,7 @@ sandboxed_test("diff", "test diff with paths") do test_repo, path
     @test "old_readme.txt" == delta(p).old_file.path
     @test "new_readme.txt" == delta(p).new_file.path
 end
-
+=#
 with_tmp_repo_access("test write blob from io with hintpath") do test_repo, path
     file_path = joinpath(TESTDIR, joinpath("fixtures", "archive.tar.gz"))
     open(file_path, "r") do io
