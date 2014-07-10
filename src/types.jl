@@ -301,13 +301,8 @@ end
 
 free!(r::GitRepo) = begin
     if r.ptr != C_NULL
-        try 
-            close(r)
-        finally
-            @show :free, r
-            ccall((:git_repository_free, libgit2), Void, (Ptr{Void},), r.ptr)
-            r.ptr = C_NULL
-        end
+        ccall((:git_repository_free, libgit2), Void, (Ptr{Void},), r.ptr)
+        r.ptr = C_NULL
     end
 end
 

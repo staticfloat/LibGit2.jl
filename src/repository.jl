@@ -43,7 +43,6 @@ end
 
 Base.close(r::GitRepo) = begin
     if r.ptr != C_NULL
-        @show :close, r
         ccall((:git_repository__cleanup, libgit2), Void, (Ptr{Void},), r.ptr)
     end
 end
