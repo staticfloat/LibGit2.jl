@@ -9,6 +9,9 @@ context(f::Function, s::String) = (println(s); context(f))
 
 cleanup_dir(p) = begin
     if isdir(p)
+        try 
+            run(`lsof +D $p`)
+        end
         rm(p, recursive=true) 
     end
 end
@@ -23,6 +26,9 @@ function remote_transport_test(f::Function)
     finally
         close(test_repo)
         LibGit2.free!(test_repo)
+        try
+            run(`lsof +D $tmp_dir`)
+        end
         rm(tmp_dir, recursive=true)
     end
 end 
@@ -129,7 +135,10 @@ function sandboxed_test(f::Function, reponame::String)
         close(repo)
         LibGit2.free!(repo)
         Base.gc()
-        rm(tmp_dir, recursive=true)
+        try
+            run(`lsof +D $tmp_dir`) 
+        end
+        rm(tmp_dir, recursive=true) 
     end
 end
 sandboxed_test(f::Function, reponame::String, s::String) = (println(s); 
@@ -147,6 +156,12 @@ function sandboxed_clone_test(f::Function, reponame::String)
         LibGit2.free!(repo)
         LibGit2.free!(remote)
         Base.gc()
+        try
+            run(`lsof +D $tmp_dir1`)
+        end
+        try
+            run(`lsof +D $tmp_dir2`)
+        end
         rm(tmp_dir1, recursive=true)
         rm(tmp_dir2, recursive=true)
     end
@@ -169,6 +184,15 @@ function sandboxed_checkout_test(f::Function)
         LibGit2.free!(test_clone)
         LibGit2.free!(test_bare)
         Base.gc()
+        try
+            run(`lsof +D $test_repo_dir`)
+        end
+        try
+            run(`lsof +D $test_clone_dir`)
+        end
+        try
+            run(`lsof +D $test_bare_dir`)
+        end
         rm(test_repo_dir, recursive=true)
         rm(test_clone_dir, recursive=true)
         rm(test_bare_dir, recursive=true)
@@ -185,6 +209,9 @@ function with_repo_access(f::Function)
         close(repo)
         LibGit2.free!(repo)
         Base.gc()
+        try
+            run(`lsof +D $path`) 
+        end
     end
 end
 with_repo_access(f::Function, s::String) = (println(s); with_repo_access(f))
@@ -200,6 +227,9 @@ function with_tmp_repo_access(f::Function)
         close(repo)
         LibGit2.free!(repo)
         Base.gc()
+        try
+            run(`lsof +D $tmp_dir`)
+        end
         rm(tmp_dir, recursive=true)
     end
 end
