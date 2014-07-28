@@ -25,6 +25,7 @@ before_install:
       hdiutil mount julia.dmg;
       cp -Ra /Volumes/Julia/*.app/Contents/Resources/julia ~;
       export PATH="$PATH:$(echo ~)/julia/bin";
+      brew update;
       brew install libgit2;
     fi
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
