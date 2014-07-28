@@ -16,7 +16,6 @@ before_install:
       sudo apt-get update -qq -y;
       sudo apt-get -qq install gdb cmake libssh2-1-dev openssh-client openssh-server;
       sudo apt-get install libpcre3-dev julia;
-      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90;
     elif [ `uname` = "Darwin" ]; then
       if [ "$JULIAVERSION" = "nightlies" ]; then
         wget -O julia.dmg "http://status.julialang.org/download/osx10.7+";
